@@ -5,7 +5,7 @@
 #
 Host mtls-ssh
   HostName 1.2.3.4
-  Port 22
+  Port 65534
   User user
   IdentityFile ~/.ssh/id_ecdsa
   # Create a CA, put the certificate in mtls-ca.pem
