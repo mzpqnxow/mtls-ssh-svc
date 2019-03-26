@@ -1,0 +1,33 @@
+[Unit]
+Description=MTLS Outer Layer to Protect External SSH
+# After=network.target
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=capam-mtls-ssh-svc
+Group=capam-mtls-ssh-svc
+GuessMainPID=yes
+EnvironmentFile=-/etc/default/mtls-ssh
+# You can get pretty fancy with privilege separation, linux capabilities, scheduling priority, etc ..
+# ReadOnlyPaths=${HOME}/.pki:/usr
+# ProtectSystem=full
+# RootDirectory=~
+# RestrictRealtime=no
+# CacheDirectory=/dev/shm
+# Nice=-20
+# UMask=0022
+# WorkingDirectory=/var/empty
+# NoNewPrivileges=no
+# OOMScoreAdjust=-1000
+# IOSchedulingClass=realtime
+# IOSchedulingPriority=-20
+ExecStart=/usr/bin/socat.static -d -d -lmdaemon \
+  ${FROM}:${PORT_LISTEN_FROM},commonname="${TLS_FROM_CN}",verify=${TLS_VERIFY},cert=${TLS_IDENTITY_CRT},key=${TLS_IDENTITY_KEY},cafile=${TLS_CA},cipher=${CIPHER_SUITES},dhparams=${TLS_DHPARAMS},method=${TLS_VERSION},${FROM_OPTIONS} \
+  ${TO}:${IP_CONNECT_TO}:${PORT_LOCAL_TO},${TO_OPTIONS}
+KillMode=process
+Type=simple
+Restart=always
+[Install]
+WantedBy=multi-user.target
+

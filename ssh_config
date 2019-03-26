@@ -1,0 +1,15 @@
+#
+# When you execute `ssh mtls-ssh`, socat establishes a mutually authenticated TLS tunnel and then hooks it up
+# to sshd on loopback, protecting your SSH daemon from any network traffic from the world. Yes, this is overkill
+# but it's fun isn't it?
+#
+Host mtls-ssh
+  HostName 1.2.3.4
+  Port 22
+  User user
+  IdentityFile ~/.ssh/id_ecdsa
+  # Create a CA, put the certificate in mtls-ca.pem
+  # Issue a client certificate with the CN="TLS-SSH Client 01" and put it in /home/user/.ssh/pki/ssh-client01.pem
+  # Issue a server certificate with the CN="TLS-SSH Server 01"
+  ProxyCommand socat.static OPENSSL-CONNECT:%h:%p,cafile=/home/user/.ssh/pki/mtls-ca.pem,cert=/home/user/.ssh/pki/ssh-client01.pem,commonname="TLS-SSH Server 01" -
+  
