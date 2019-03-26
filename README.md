@@ -30,13 +30,15 @@ You need to make sure the certificates and keys are where they need to be
 
 #### Server
 
-The server needs the CA certificate as well as the signed "MTLS-SSH Server01" certificate and key. You can concatenate the certificate and key into one PEM file if they are in PEM format
+The server needs the CA certificate to authenticate the client as well as the signed "MTLS-SSH Server01" certificate and key to allow the client to authenticate the server. You can concatenate the certificate and key into one PEM file if they are in PEM format
 
 #### Client
 
-The client needs the CA certificate as well as the signed "MTLS-SSH Client01" certificate and key. You can concatenate the certificate and key into one PEM file if they are in PEM format
+The client needs the CA certificate to authenticate the server as well as the signed "MTLS-SSH Client01" certificate and key to allow the server to authenticate the client. You can concatenate the certificate and key into one PEM file if they are in PEM format
 
-Note the CA key is not involved, hopefully you know that is only required when issuing new certificates :>
+### Don't be stupid
+
+Note the CA key is not involved anywhere here, hopefully you know that is only required when issuing new certificates :>
 
 ### Set up the systemd service on the server
 
@@ -50,7 +52,7 @@ You can see the example in `ssh_config` in this repository. This makes it a seam
 
 ### Test
 
-Use ssh to make sure things work
+Use ssh to make sure things work! Or, use `socat` / `openssl s_client -connect ...` in baby steps to test each side
 
 ### Set OpenSSH to only listen on loopback
 
