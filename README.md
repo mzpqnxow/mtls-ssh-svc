@@ -1,5 +1,5 @@
 # mtls-ssh-svc
-Mutual TLS wrapped SSH, ssh configuration and a systemd unit file
+Mutual TLS wrapped SSH, OpenSSH client configuration file and a systemd unit file
 
 ## Summary
 
