@@ -3,7 +3,7 @@ Mutual TLS wrapped SSH, OpenSSH client configuration file and a systemd unit fil
 
 ## Summary
 
-This is an example of a service that exists solely to ensure only users with a signed certificate and pinned CN can reach your SSH server. It is a bit ridiculous, but it is a good example of how flexible `socat` and OpenSSH are
+This is an example of a service that exists solely to ensure only users with a signed certificate and pinned CN can reach your SSH server. It is a bit ridiculous, but it is a good example of how flexible `socat` and OpenSSH are. In this configuration, the server verifies the client via a pinned certificate CN and the client verifies the server via a pinned certificate CN. Both certificates are issued by the same CA, which is assumed to be owned by *you*
 
 ## How-To
 
